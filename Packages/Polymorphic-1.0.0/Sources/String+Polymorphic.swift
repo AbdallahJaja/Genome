@@ -1,19 +1,19 @@
 extension String: Polymorphic {
     /**
-        Determines whether or not the `String` is null.
-        Returns `true` if the `String` is equal to `"null"`.
-    */
+     Determines whether or not the `String` is null.
+     Returns `true` if the `String` is equal to `"null"`.
+     */
     public var isNull: Bool {
         return self.lowercased() == "null"
     }
-
+    
     /**
-        Attempts to convert the String to a `Bool`. 
-        The conversion **may** succeed if the `String`
-        has a truthy/falsey value like `"yes"` or `"false"`
-
-        All others will always return `nil`.
-    */
+     Attempts to convert the String to a `Bool`.
+     The conversion **may** succeed if the `String`
+     has a truthy/falsey value like `"yes"` or `"false"`
+     
+     All others will always return `nil`.
+     */
     public var bool: Bool? {
         switch lowercased() {
         case "y", "1", "yes", "t", "true":
@@ -24,64 +24,64 @@ extension String: Polymorphic {
             return nil
         }
     }
-
+    
     /**
-        Attempts to convert the `String` to a `Float`. 
-        The conversion uses the `Float(_: String)` initializer.
-    */
+     Attempts to convert the `String` to a `Float`.
+     The conversion uses the `Float(_: String)` initializer.
+     */
     public var float: Float? {
         return Float(self)
     }
-
+    
     /**
-        Attempts to convert the `String` to a `Double`. 
-        The conversion uses the `Double(_: String)` initializer.
-    */
+     Attempts to convert the `String` to a `Double`.
+     The conversion uses the `Double(_: String)` initializer.
+     */
     public var double: Double? {
         return Double(self)
     }
-
+    
     /**
-        Attempts to convert the `String` to a `Int`. 
-        The conversion uses the `Int(_: String)` initializer.
-    */
+     Attempts to convert the `String` to a `Int`.
+     The conversion uses the `Int(_: String)` initializer.
+     */
     public var int: Int? {
         return Int(self)
     }
-
+    
     /**
-         Attempts to convert the `String` to a `UInt`.
-         The conversion uses the `UInt(_: String)` initializer.
-    */
+     Attempts to convert the `String` to a `UInt`.
+     The conversion uses the `UInt(_: String)` initializer.
+     */
     public var uint: UInt? {
         return UInt(self)
     }
-
+    
     /**
-        Attempts to convert the `String` to a `String`.
-        This always works.
-    */
+     Attempts to convert the `String` to a `String`.
+     This always works.
+     */
     public var string: String? {
         return self
     }
-
+    
     /**
-        Attempts to convert the `String` to an `Array`.
-        Comma separated items will be split into
-        multiple entries.
-    */
+     Attempts to convert the `String` to an `Array`.
+     Comma separated items will be split into
+     multiple entries.
+     */
     public var array: [Polymorphic]? {
-        return characters
+        return self
             .split(separator: ",")
             .map { String($0) }
             .map { $0.trimmedWhitespace() }
             .map { $0 as Polymorphic }
     }
-
+    
     /**
-        Attempts to convert the `String` to a `Dictionary`.
-        This conversion always fails.
-    */
+     Attempts to convert the `String` to a `Dictionary`.
+     This conversion always fails.
+     */
     public var object: [String : Polymorphic]? {
         return nil
     }
@@ -89,15 +89,15 @@ extension String: Polymorphic {
 
 extension String {
     func trimmedWhitespace() -> String {
-        var characters = self.characters
-
+        var characters = self
+        
         while characters.first?.isWhitespace == true {
             characters.removeFirst()
         }
         while characters.last?.isWhitespace == true {
             characters.removeLast()
         }
-
+        
         return String(characters)
     }
 }

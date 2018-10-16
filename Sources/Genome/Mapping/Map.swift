@@ -2,11 +2,11 @@
 public final class Map: NodeBacked {
     
     /**
-    The representative type of mapping operation
-    
-    - ToNode:   transforming the object into a node dictionary representation
-    - FromNode: transforming a node dictionary representation into an object
-    */
+     The representative type of mapping operation
+     
+     - ToNode:   transforming the object into a node dictionary representation
+     - FromNode: transforming a node dictionary representation into an object
+     */
     public enum OperationType {
         case toNode
         case fromNode
@@ -17,12 +17,12 @@ public final class Map: NodeBacked {
     
     /// The greater context in which the mapping takes place
     public let context: Context
-
+    
     /// The backing Node being mapped
     public var node: Node
     
     // MARK: Private
-
+    
     /// The last key accessed -- Used to reverse Node Operations
     internal fileprivate(set) var lastPath: [PathIndex] = []
     
@@ -34,9 +34,9 @@ public final class Map: NodeBacked {
             }
         }
     }
-
+    
     // MARK: Initialization
-
+    
     /**
      A convenience mappable initializer that takes any conforming backing data
      
@@ -60,7 +60,7 @@ public final class Map: NodeBacked {
         self.node = node
         self.context = context
     }
-
+    
     public convenience init(_ node: Node) {
         self.init(node: node, in: EmptyNode)
     }
@@ -83,20 +83,20 @@ public final class Map: NodeBacked {
 extension Map {
     /**
      Basic subscripting
-
+     
      :param: keyPath the keypath to use when getting the value from the backing node
-
+     
      :returns: returns an instance of self that can be passed to the mappable operator
      */
     public subscript(keys: PathIndex...) -> Map {
         return self[keys]
     }
-
+    
     /**
      Basic subscripting
-
+     
      :param: keyPath the keypath to use when getting the value from the backing node
-
+     
      :returns: returns an instance of self that can be passed to the mappable operator
      */
     public subscript(keys: [PathIndex]) -> Map {
@@ -104,9 +104,9 @@ extension Map {
         result = node[keys]
         return self
     }
-
+    
     public subscript(path path: String) -> Map {
-        let components = path.characters
+        let components = path
             .split(separator: ".")
             .map { String($0) }
         return self[components]
@@ -120,7 +120,7 @@ extension Map {
         guard let newValue = newValue else { return }
         node[lastPath] = newValue
     }
-
+    
     internal func setToLastPath<T : NodeConvertible>(_ any: T?) throws {
         try setToLastPath(any?.makeNode())
     }

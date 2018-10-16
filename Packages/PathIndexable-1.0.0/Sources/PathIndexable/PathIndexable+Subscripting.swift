@@ -18,7 +18,7 @@ extension PathIndexable {
             self[indexes] = newValue
         }
     }
-
+    
     public subscript(indexes: [PathIndex]) -> Self? {
         get {
             let first: Optional<Self> = self
@@ -31,7 +31,7 @@ extension PathIndexable {
             var keys = indexes
             guard let first = keys.first else { return }
             keys.remove(at: 0)
-
+            
             if keys.isEmpty {
                 first.set(newValue, to: &self)
             } else {
@@ -52,7 +52,7 @@ extension PathIndexable {
             self[indexes] = newValue
         }
     }
-
+    
     public subscript(indexes: [Int]) -> Self? {
         get {
             let indexable = indexes.map { $0 as PathIndex }
@@ -68,7 +68,7 @@ extension PathIndexable {
 extension PathIndexable {
     public subscript(path path: String) -> Self? {
         get {
-            let comps = path.characters.split(separator: ".").map(String.init)
+            let comps = path.split(separator: ".").map(String.init)
             return self[comps]
         }
         set {
@@ -76,7 +76,7 @@ extension PathIndexable {
             self[comps] = newValue
         }
     }
-
+    
     public subscript(indexes: String...) -> Self? {
         get {
             return self[indexes]
@@ -85,7 +85,7 @@ extension PathIndexable {
             self[indexes] = newValue
         }
     }
-
+    
     public subscript(indexes: [String]) -> Self? {
         get {
             let indexable = indexes.map { $0 as PathIndex }
@@ -96,12 +96,12 @@ extension PathIndexable {
             self[indexable] = newValue
         }
     }
-
+    
 }
 
 extension String {
     internal func keyPathComponents() -> [String] {
-        return characters
+        return self
             .split(separator: ".")
             .map(String.init)
     }
